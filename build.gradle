@@ -17,11 +17,6 @@ processResources {
 
 compileJava.options.encoding = 'UTF-8'
 
-compileJava {
-    sourceCompatibility = 8
-    targetCompatibility = 8
-}
-
 String getGitHash() {
     def output = new ByteArrayOutputStream()
     exec {
