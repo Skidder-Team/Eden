@@ -64,4 +64,13 @@ public class PlayerUtil {
 	public static void clearArrow(Player player) {
 		((CraftPlayer) player).getHandle().getDataWatcher().watch(9, (byte) 0);
 	}
+
+	public static int getPing(Player player) {
+		try {
+			org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer craftPlayer = (org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer) player;
+			return craftPlayer.getHandle().ping;
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 }

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import rip.diamond.practice.config.Config;
 import rip.diamond.practice.config.Language;
 import rip.diamond.practice.util.CC;
+import rip.diamond.practice.util.PlayerUtil;
 import rip.diamond.practice.util.tablist.ImanityTabAdapter;
 import rip.diamond.practice.util.tablist.util.BufferedTabObject;
 import rip.diamond.practice.util.tablist.util.Skin;
@@ -34,7 +35,7 @@ public class TabAdapter implements ImanityTabAdapter {
                     .slot(x)
                     .column(TabColumn.getFromOrdinal(y))
                     .text(CC.translate(Language.translate(Config.FANCY_TABLIST_FORMAT.toString().replace("{player-name}", target.getName()), target)))
-                    .ping(target.spigot().getPing())
+                    .ping(PlayerUtil.getPing(target))
                     .skin(Skin.fromPlayer(target))
             );
 

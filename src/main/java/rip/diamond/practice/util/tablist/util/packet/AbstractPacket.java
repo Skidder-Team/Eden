@@ -52,7 +52,7 @@ public abstract class AbstractPacket {
 	public PacketContainer getHandle() {
 		return handle;
 	}
-	
+
 	/**
 	 * Send the current packet to the given receiver.
 	 * @param receiver - the receiver.
@@ -61,11 +61,11 @@ public abstract class AbstractPacket {
 	public void sendPacket(Player receiver) {
 		try {
 			ProtocolLibrary.getProtocolManager().sendServerPacket(receiver, getHandle());
-		} catch (InvocationTargetException e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Cannot send packet.", e);
 		}
 	}
-	
+
 	/**
 	 * Simulate receiving the current packet from the given sender.
 	 * @param sender - the sender.
@@ -73,7 +73,8 @@ public abstract class AbstractPacket {
 	 */
 	public void receivePacket(Player sender) {
 		try {
-			ProtocolLibrary.getProtocolManager().recieveClientPacket(sender, getHandle());
+			// Corrected method name: 'receiveClientPacket' instead of 'recieveClientPacket'
+			ProtocolLibrary.getProtocolManager().receiveClientPacket(sender, getHandle());
 		} catch (Exception e) {
 			throw new RuntimeException("Cannot receive packet.", e);
 		}

@@ -2,6 +2,7 @@ package rip.diamond.practice.match.team;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -61,7 +62,19 @@ public class TeamPlayer {
 
 	public int getPing() {
 		Player player = getPlayer();
-		return player == null ? 0 : player.spigot().getPing();
+		if (player == null) {
+			return 0;
+		}
+
+		try {
+			// For 1.8.8, get ping from NMS EntityPlayer
+			CraftPlayer craftPlayer = (CraftPlayer) player;
+			EntityPlayer entityPlayer = craftPlayer.getHandle();
+			return entityPlayer.ping;
+		} catch (Exception e) {
+			// Fallback to 0 if we can't get ping
+			return 0;
+		}
 	}
 
 	public void broadcastTitle(String title, String subtitle) {
@@ -113,5 +126,4 @@ public class TeamPlayer {
 		getPlayer().getActivePotionEffects().clear(); //A fix for #389 - Remove effects like absorption when score
 		lastHitDamager = null; //A fix for #11 - Prevent kill spam (https://www.youtube.com/watch?v=oD6k0rrNVTk)
 	}
-
 }

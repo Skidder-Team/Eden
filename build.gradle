@@ -34,7 +34,9 @@ repositories {
     }
 
     //Spigot and ImanitySpigot API
-    maven { url = "https://hub.spigotmc.org/nexus/repository/public/"}
+    maven {
+        url = "https://hub.spigotmc.org/nexus/repository/public/"
+    }
     maven {
         name "imanityLibraries"
         url "https://maven.imanity.dev/imanity-libraries"
@@ -74,11 +76,8 @@ dependencies {
     compileOnly 'net.citizensnpcs:citizensapi:2.0.30-SNAPSHOT' //Citizens
 
     // Lombok
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-
-    testCompileOnly 'org.projectlombok:lombok:1.18.24'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 test {

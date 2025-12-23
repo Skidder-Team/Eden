@@ -1,6 +1,7 @@
 package rip.diamond.practice.misc.commands;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rip.diamond.practice.config.Language;
@@ -9,7 +10,6 @@ import rip.diamond.practice.util.Common;
 import rip.diamond.practice.util.command.Command;
 import rip.diamond.practice.util.command.CommandArgs;
 import rip.diamond.practice.util.command.argument.CommandArguments;
-import rip.diamond.spigotapi.SpigotAPI;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +64,7 @@ public class EdenCommand extends Command {
                 Common.sendMessage(sender, CC.GREEN + "Debug is now: " + (plugin.getConfigFile().getBoolean("debug") ? CC.GREEN + Language.ENABLED.toString() : CC.RED + Language.DISABLED.toString()));
                 return;
             case SPIGOT:
-                Common.sendMessage(sender, CC.YELLOW + "Eden is currently hooked to " + CC.AQUA + SpigotAPI.INSTANCE.getSpigotType().name());
+                Common.sendMessage(sender, CC.YELLOW + "Eden is currently hooked to " + CC.AQUA + Bukkit.getServer().getVersion());
                 return;
         }
     }

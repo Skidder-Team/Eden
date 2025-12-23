@@ -5,6 +5,11 @@ import lombok.Setter;
 import net.minecraft.server.v1_8_R3.EntityLightning;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityWeather;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.IAttribute;
+import net.minecraft.server.v1_8_R3.AttributeInstance;
+import net.minecraft.server.v1_8_R3.AttributeModifier;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -126,8 +131,8 @@ public abstract class Match {
                 player.setHealth(player.getMaxHealth() - 0.001); //Fix for health display as 0 - #379
             }
 
-            //Set up the knockback
-            plugin.getSpigotAPI().getKnockback().applyKnockback(player, kit.getGameRules().getKnockbackName());
+            //Set up the knockback using NMS directly
+            applyKnockback(player, kit.getGameRules().getKnockbackName());
         }
 
         //Teleport players into their team spawn
@@ -146,6 +151,77 @@ public abstract class Match {
         event.call();
 
         new MatchNewRoundTask(this, null, false);
+    }
+
+    /**
+     * Apply knockback settings using NMS directly
+     */
+    private void applyKnockback(Player player, String knockbackName) {
+        if (knockbackName == null || knockbackName.isEmpty()) {
+            return;
+        }
+
+        try {
+            CraftPlayer craftPlayer = (CraftPlayer) player;
+            EntityPlayer nmsPlayer = craftPlayer.getHandle();
+
+            // Get the knockback resistance attribute
+            IAttribute knockbackResistance = GenericAttributes.c;
+
+            // Get attribute instance
+            AttributeInstance attributeInstance = nmsPlayer.getAttributeInstance(knockbackResistance);
+
+            if (attributeInstance == null) {
+                return;
+            }
+
+            // Clear existing modifiers
+            attributeInstance.c(); // This clears modifiers
+
+            // Apply new modifier based on knockback profile
+            double resistance = getKnockbackResistanceValue(knockbackName);
+            if (resistance != 0.0) {
+                UUID modifierId = UUID.randomUUID();
+                AttributeModifier modifier = new AttributeModifier(
+                        modifierId,
+                        "EdenKnockback",
+                        resistance,
+                        0
+                );
+
+                // Apply the modifier
+                attributeInstance.b(modifier);
+            }
+
+        } catch (Exception e) {
+            Common.log("Failed to apply knockback settings for " + player.getName() + ": " + e.getMessage());
+            if (Config.DEBUG.toBoolean()) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Get knockback resistance value based on profile name
+     */
+    private double getKnockbackResistanceValue(String knockbackName) {
+        // Default resistance values - adjust these based on your needs
+        switch (knockbackName.toLowerCase()) {
+            case "hard":
+                return 0.2; // Less knockback (20% resistance)
+            case "soft":
+                return -0.2; // More knockback (-20% resistance)
+            case "normal":
+            case "default":
+                return 0.0; // Default knockback
+            default:
+                // Try to parse as a number
+                try {
+                    return Double.parseDouble(knockbackName);
+                } catch (NumberFormatException e) {
+                    return 0.0; // Default if unknown name
+                }
+        }
     }
 
     /**

@@ -79,7 +79,14 @@ public class DuelRequest {
 	}
 
 	private String formatPing(Player player) {
-		return Language.DUEL_DUEL_REQUEST_CLICK_TO_VIEW_PING_HOVER.toString(player.getName(), player.spigot().getPing());
+		try {
+			// For 1.8.8, use NMS to get ping
+			org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer craftPlayer = (org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer) player;
+			int ping = craftPlayer.getHandle().ping;
+			return Language.DUEL_DUEL_REQUEST_CLICK_TO_VIEW_PING_HOVER.toString(player.getName(), ping);
+		} catch (Exception e) {
+			// Fallback if NMS fails
+			return Language.DUEL_DUEL_REQUEST_CLICK_TO_VIEW_PING_HOVER.toString(player.getName(), 0);
+		}
 	}
-
 }

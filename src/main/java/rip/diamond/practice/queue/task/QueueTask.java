@@ -16,6 +16,7 @@ import rip.diamond.practice.profile.ProfileSettings;
 import rip.diamond.practice.queue.Queue;
 import rip.diamond.practice.queue.QueueProfile;
 import rip.diamond.practice.queue.QueueType;
+import rip.diamond.practice.util.PlayerUtil;
 import rip.diamond.practice.util.TaskTicker;
 import rip.diamond.practice.util.Tasks;
 
@@ -63,7 +64,7 @@ public class QueueTask extends TaskTicker {
                 if (profile1.getPlayerState() != PlayerState.IN_QUEUE || profile2.getPlayerState() != PlayerState.IN_QUEUE) {
                     continue;
                 }
-                if (player2.spigot().getPing() > Integer.parseInt(profile1.getSettings().get(ProfileSettings.PING_RANGE).getValue()) || player1.spigot().getPing() > Integer.parseInt(profile2.getSettings().get(ProfileSettings.PING_RANGE).getValue())) {
+                if (PlayerUtil.getPing(player2) > Integer.parseInt(profile1.getSettings().get(ProfileSettings.PING_RANGE).getValue()) || PlayerUtil.getPing(player1) > Integer.parseInt(profile2.getSettings().get(ProfileSettings.PING_RANGE).getValue())) {
                     continue;
                 }
 

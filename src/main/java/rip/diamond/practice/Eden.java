@@ -64,7 +64,6 @@ import rip.diamond.practice.util.menu.Menu;
 import rip.diamond.practice.util.menu.MenuListener;
 import rip.diamond.practice.util.nametags.NameTagManager;
 import rip.diamond.practice.util.tablist.ImanityTabHandler;
-import rip.diamond.spigotapi.SpigotAPI;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -94,7 +93,6 @@ public class Eden extends JavaPlugin {
     private HookManager hookManager;
     private NameTagManager nameTagManager;
 
-    private SpigotAPI spigotAPI;
     private EntityHider entityHider;
     private SconeyHandler scoreboardHandler;
     private ImanityTabHandler tabHandler;
@@ -104,8 +102,6 @@ public class Eden extends JavaPlugin {
     @Override
     public void onEnable() {
         INSTANCE = this;
-
-        spigotAPI = new SpigotAPI().init(this);
 
         loadFiles();
         loadManagers();
@@ -233,6 +229,7 @@ public class Eden extends JavaPlugin {
         Queue.init();
         DuelRequest.init();
         leaderboardManager.init();
+
 
         new LobbyMovementHandler(this);
         new MatchMovementHandler();

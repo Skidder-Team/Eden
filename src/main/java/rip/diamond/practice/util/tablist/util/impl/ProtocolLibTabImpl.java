@@ -184,11 +184,17 @@ public class ProtocolLibTabImpl implements IImanityTabImpl {
         }
     }
 
-    private static void sendPacket(Player player, PacketContainer packetContainer){
+    private static void sendPacket(Player player, PacketContainer packetContainer) {
         try {
             ProtocolLibrary.getProtocolManager().sendServerPacket(player, packetContainer);
-        } catch (InvocationTargetException e) {
+        } catch (RuntimeException e) {
+            // Log and re-throw runtime exceptions for critical failures
             e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            // Log non-runtime exceptions but continue execution
+            e.printStackTrace();
+            // Optionally: Add custom logging or metrics here
         }
     }
 

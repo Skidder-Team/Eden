@@ -27,7 +27,6 @@ import rip.diamond.practice.config.Config;
 import rip.diamond.practice.config.Language;
 import rip.diamond.practice.match.Match;
 import rip.diamond.practice.match.team.Team;
-import rip.diamond.spigotapi.SpigotType;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -318,11 +317,6 @@ public class Util {
     }
 
     public static void teleport(Player player, Location location) {
-        if (Config.IMANITY_TELEPORT_ASYNC.toBoolean() && Eden.INSTANCE.getSpigotAPI().getSpigotType() == SpigotType.IMANITY_SPIGOT_3) {
-            Eden.INSTANCE.getHookManager().getImanitySpigot3Hook().teleportAsync(player, location);
-            return;
-        }
-
         player.teleport(location);
     }
 
