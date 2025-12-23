@@ -45,11 +45,7 @@ repositories {
     }
     //PlaceholderAPI
     maven {
-        url "https://repo.extendedclip.com/content/repositories/placeholderapi/"
-    }
-    //ProtocolLib
-    maven {
-        url "https://repo.dmulloy2.net/repository/public/"
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
     }
     //Citizens
     maven {
@@ -74,8 +70,8 @@ dependencies {
     compileOnly name: 'ViaVersion-4.4.2'
 
     //Libraries from others
-    compileOnly 'me.clip:placeholderapi:2.11.2' //PlaceholderAPI
-    compileOnly 'com.comphenix.protocol:ProtocolLib:4.7.0' //ProtocolLib
+    compileOnly 'me.clip:placeholderapi:2.11.7' //PlaceholderAPI
+    compileOnly 'net.dmulloy2:ProtocolLib:5.4.0' //ProtocolLib
     compileOnly 'net.citizensnpcs:citizensapi:2.0.30-SNAPSHOT' //Citizens
 
     // Lombok
